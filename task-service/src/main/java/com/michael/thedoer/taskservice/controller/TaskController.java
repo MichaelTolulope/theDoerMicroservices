@@ -3,6 +3,7 @@ package com.michael.thedoer.taskservice.controller;
 import com.michael.thedoer.taskservice.dto.TaskDto;
 import com.michael.thedoer.taskservice.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +15,9 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping("/user/{userId}")
-    public List<TaskDto> getTasks(@PathVariable String userId,
-                                  @RequestParam int page, int size) {
-        return taskService.getTasksByUserId(userId, page, size);
+    public ResponseEntity<?> getTasks(@PathVariable String userId,
+                                                  @RequestParam int page, int size) {
+        return new ResponseEntity<>(taskService.getTasksByUserId(userId, page, size).getBody(), taskService.getTasksByUserId(userId, page, size).getStatusCode());
 
     }
 
@@ -26,7 +27,7 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    public TaskDto addTask(@RequestBody TaskDto taskDto) {
-        return taskService.addTask(taskDto);
+    public ResponseEntity<?> addTask(@RequestBody TaskDto taskDto) {
+        return new ResponseEntity<>(taskService.addTask(taskDto), taskService.addTask(taskDto).getStatusCode());
     }
 }
