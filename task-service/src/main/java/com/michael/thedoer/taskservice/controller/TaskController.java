@@ -2,6 +2,7 @@ package com.michael.thedoer.taskservice.controller;
 
 import com.michael.thedoer.taskservice.dto.TaskDto;
 import com.michael.thedoer.taskservice.service.TaskService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

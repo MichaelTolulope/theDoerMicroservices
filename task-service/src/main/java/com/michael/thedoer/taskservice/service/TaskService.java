@@ -23,7 +23,7 @@ public class TaskService {
     @Autowired
     private WebClient webClient;
 
-    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackUser")
+    @CircuitBreaker(name = "user-service", fallbackMethod = "fallbackUser")
     public ResponseEntity<?> getTasksByUserId(String userId, int page, int size) {
         boolean userExists = Boolean.TRUE.equals(webClient.get()
                 .uri("http://user-service/api/users/user-exists/{id}", userId)
@@ -35,7 +35,7 @@ public class TaskService {
 
         Pageable pageRequest = PageRequest.of(page, size);
         List<TaskDto> taskList = taskRepository.findTasksByUserId(userId, pageRequest).getContent();
-        List<TaskDto> taskListToBeReturned = taskList.stream().map(task-> TaskDto.builder()
+        List<TaskDto> taskListToBeReturned = taskList.stream().map(task-> TaskDto .builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
